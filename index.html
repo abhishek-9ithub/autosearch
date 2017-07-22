@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Auto Search</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <style>
+        input.autoSearch-input {
+            margin: 0 0 0px;
+            border: 1px solid #cdcdcd;
+            width: 100%;
+            border-radius: 3px;
+            -webkit-appearance: none;
+            padding: 8px 10px;
+            font-size: 16px;
+            color: #062746;
+            background-color: #fff;
+        }
+        
+        ul.autoUl {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, .2);
+        }
+        
+        ul.autoUl li a {
+            display: block;
+            padding: 8px 10px;
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0.87);
+            cursor: pointer;
+        }
+        
+        ul.autoUl li a:hover {
+            text-decoration: none;
+            background: rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="jumbotron text-center">
+        <h1>Auto Search</h1>
+        <p>Jquery Auto seach</p>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="demo" class="auto-search-wrap">
+                    <select class="hidden">
+                        <option value="0">Abhishek Mishra</option>
+                        <option value="1">Option One</option>
+                        <option value="2">Train</option>
+                        <option value="3">Bus</option>
+                        <option value="4">Aeroplanne</option>
+                        <option value="5">Qutubminar</option>
+                        <option value="6">Tajmahal</option>
+                        <option value="7">Lucknow</option>
+                        <option value="8">Kolkata</option>
+                        <option value="9">Chennai</option>
+                        <option value="10">Kanpur</option>
+                        <option value="11">Noida</option>
+                    </select>
+                    <input type="text" class="autoSearch-input">
+                    <input type="hidden" class="autoSearch-hiddenId">
+                    <input type="hidden" class="autoSearch-hiddenVal">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="test"></div>
+</body>
+<script>
+    $(function() {
+
+        // $('.auto-search-wrap').append('<ul class="autoUl"></ul>');
+        // $('.autoSearch-input').keyup(function() {
+        //     parentEle = $('.autoUl');
+
+        //     if ($(this).val().length > 0) {
+        //         $('.autoUl').html('');
+        //         $('.autoSearch-hiddenId').val('');
+        //         $('.autoSearch-hiddenVal').val('');
+        //         var li = $('.auto-search-wrap option');
+        //         var filterVal = $(this).val().toUpperCase();
+        //         for (var i = 0; i < $(li).length; i++) {
+        //             if ($(li).eq(i).text().toUpperCase().indexOf(filterVal) > -1) {
+        //                 var x = $('.autoUl li').length;
+        //                 $('.autoUl').append('<li><a data-id="' + $(li).eq(i).val() + '">' + $(li).eq(i).text() + '</a></li>')
+        //                 resetList(parentEle);
+        //             } else {
+        //                 $('.autoUl a[data-id="' + $(li).eq(i).val() + '"]').remove();
+        //             }
+        //         }
+        //     } else {
+        //         $('.autoUl').html('');
+        //         $(this).val('');
+        //         $('.autoSearch-hiddenId').val('');
+        //         $('.autoSearch-hiddenVal').val('');
+        //     }
+
+
+        // });
+
+
+
+
+
+
+    });
+</script>
+<script>
+    $(function() {
+        var arr = ['abhi-12', 'zzza-13', 'asdsd-67', 'dasdasd-87'];
+        $('.auto-search-wrap').append('<ul class="autoUl"></ul>');
+        $('.autoSearch-input').keyup(function() {
+            if ($(this).val().length > 0) {
+                $('.autoUl').html('');
+                $('.autoSearch-hiddenId').val('');
+                $('.autoSearch-hiddenVal').val('');
+                myFunction();
+            } else {
+                $('.autoUl').html('');
+                $(this).val('');
+                $('.autoSearch-hiddenId').val('');
+                $('.autoSearch-hiddenVal').val('');
+            }
+        });
+
+
+        function checkAdult(age) {
+            return age.indexOf($('.autoSearch-input').val()) > -1;
+        }
+
+        function resetList(ele) {
+            $(ele).find('li').each(function(key, val) {
+                if (key > 4) {
+                    $(this).remove();
+                }
+            });
+        }
+
+        function myFunction() {
+
+            var str = arr.filter(checkAdult);
+            for (var i = 0; i < str.length; i++) {
+                var eleKey = str[i].split('-');
+                $('.autoUl').append('<li><a href="javascript:void(0);" data-id="' + eleKey[1] + '">' + eleKey[0] + '</a></li>');
+                resetList('.autoUl');
+            }
+        }
+        //click to result
+        $('body').on('click', '.autoUl a', function() {
+            $('.autoSearch-hiddenId').val($(this).attr('data-id'));
+            $('.autoSearch-hiddenVal').val($(this).text());
+            $('.autoSearch-input').val($(this).text());
+            $(this).parents('ul').html('');
+        });
+    });
+</script>
+
+</html>
